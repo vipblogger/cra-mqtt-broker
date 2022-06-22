@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto
+    volumes:
+      - ./:/mosquitto/:rw
+    ports:
+      - 1883:1883
+      - 9001:9001
+    environment:
+      - PUID=1000
+      - PGID=1000
