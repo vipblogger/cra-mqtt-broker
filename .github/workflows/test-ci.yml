@@ -12,5 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the stack
         run: docker-compose up -d
+      - name: Check running containers
+        run: docker ps -a
       - name: Test publish
-        run: docker exec -ti mqtt_mosquitto sh -c "mosquitto_pub -h ${{ secrets.MQTT_IP }} -t 'test/topic' -m 'hello world' -u device2 -P ${{ secrets.DEVICE2_PASSWORD }}"
+        run: docker exec -ti container:mqtt_mosquitto sh -c "mosquitto_pub -h ${{ secrets.MQTT_IP }} -t 'test/topic' -m 'hello world' -u device2 -P ${{ secrets.DEVICE2_PASSWORD }}"
