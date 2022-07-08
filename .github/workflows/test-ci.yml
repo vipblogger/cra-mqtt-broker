@@ -1,0 +1,16 @@
+name: Test CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker-compose up -d
+      - name: Test publish
+        run: docker exec -ti cra-mqtt_mosquitto_1 sh -c "mosquitto_pub -h ${{ secrets.MQTT_IP }} -t 'test/topic' -m 'hello world' -u device2 -P ${{ secrets.DEVICE2_PASSWORD }}"
