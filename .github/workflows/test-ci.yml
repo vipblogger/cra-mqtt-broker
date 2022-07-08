@@ -6,13 +6,10 @@ on:
 
 jobs:
   mqtt-tests:
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
         run: docker-compose up -d
-      - name: Check running containers
-        run: docker ps -a
       - name: Test publish
         run: docker exec cra-mqtt-broker_mosquitto_1 sh -c "mosquitto_pub -h ${{ secrets.MQTT_IP }} -t 'test/topic' -m 'hello world' -u device2 -P ${{ secrets.DEVICE2_PASSWORD }}"
